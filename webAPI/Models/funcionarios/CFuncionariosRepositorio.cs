@@ -36,8 +36,10 @@ namespace webAPI.Models.funcionarios
 
         public CFuncionarios Find(int id)
         {
-
-            throw new NotImplementedException();
+            var funcionarios = new CFuncionarios();
+             funcionarios = CAcessoDados.GetCFuncionarios(id);
+            return funcionarios;
+            //throw new NotImplementedException();
         }
 
         public void insert(CFuncionarios item)

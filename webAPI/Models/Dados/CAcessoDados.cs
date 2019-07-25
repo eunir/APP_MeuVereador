@@ -55,7 +55,32 @@ namespace webAPI.Models
         }
 
         //Método de buscar funcionario por id
-
+        public static CFuncionarios GetCFuncionarios(int id)
+        {
+            CFuncionarios funcionarios = null;
+            using (MySqlConnection conexao = new MySqlConnection(GetStringConexao()))
+            {
+                conexao.Open();
+                using (MySqlCommand cmd = new MySqlCommand("SELECT * FROM funcionarios WHERE id_funcionario ="+id, conexao))
+                {
+                    using (MySqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr != null)
+                        {
+                            while (dr.Read())
+                            {
+                                funcionarios = new CFuncionarios();
+                                funcionarios.id_funcionario = Convert.ToInt32(dr["id_funcionario"]);
+                                funcionarios.nome_funcionario = Convert.ToString(dr["nome_funcionario"]);
+                                
+                            }
+                        }
+                        return funcionarios;
+                    }
+                }
+                
+            }
+        }
 
     }
 }
