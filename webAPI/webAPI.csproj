@@ -143,6 +143,9 @@
     <Compile Include="Models\funcionarios\CFuncionarios.cs" />
     <Compile Include="Models\funcionarios\CFuncionariosRepositorio.cs" />
     <Compile Include="Models\funcionarios\IFuncionariosRepositorio.cs" />
+    <Compile Include="Models\usuarios\CUsuario.cs" />
+    <Compile Include="Models\usuarios\CUsuarioRepositorio.cs" />
+    <Compile Include="Models\usuarios\IUsuarioRepositorio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

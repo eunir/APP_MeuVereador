@@ -33,5 +33,27 @@ namespace webAPI.Controllers
             }
             return funcionario;
         }
+
+        //POST: api/funcionarios
+        [HttpPost()]
+        public void Post([FromBody]CFuncionarios funcionario)
+        {
+            _funcionariosRepositorio.insert(funcionario);
+        }
+
+        //PUT: api/funcionarios/id
+        [HttpPut()]
+        public void Put(int id,[FromBody]CFuncionarios funcionario)
+        {
+            funcionario.id_funcionario = id;
+            _funcionariosRepositorio.update(funcionario);
+        }
+
+        //DELETE: api/funcionarios/id
+        [HttpDelete()]
+        public void Delete(int id)
+        {
+            _funcionariosRepositorio.delete(id);
+        }
     }
 }

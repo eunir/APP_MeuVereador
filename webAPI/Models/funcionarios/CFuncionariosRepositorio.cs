@@ -27,29 +27,39 @@ namespace webAPI.Models.funcionarios
                 return _funcionarios;
             }
         }
-        //public IEnumerable<CFuncionarios> All => throw new NotImplementedException();
 
         public void delete(int id)
         {
-            throw new NotImplementedException();
+            CAcessoDados.DeleteFuncionario(id);
         }
 
         public CFuncionarios Find(int id)
         {
-            var funcionarios = new CFuncionarios();
-             funcionarios = CAcessoDados.GetCFuncionarios(id);
-            return funcionarios;
-            //throw new NotImplementedException();
+            return CAcessoDados.GetCFuncionarios(id);
         }
 
-        public void insert(CFuncionarios item)
+        public void insert(CFuncionarios funcionario)
         {
-            throw new NotImplementedException();
+            if (funcionario == null)
+            {
+                throw new ArgumentNullException("funcionarios");
+            }
+            else
+            {
+                CAcessoDados.InsertFuncionarios(funcionario);
+            }
         }
 
-        public void update(CFuncionarios item)
+        public void update(CFuncionarios funcionario)
         {
-            throw new NotImplementedException();
+            if (funcionario == null)
+            {
+                throw new ArgumentNullException("funcionarios");
+            }
+            else
+            {
+                CAcessoDados.UpdateFuncionarios(funcionario);
+            }
         }
     }
 }
