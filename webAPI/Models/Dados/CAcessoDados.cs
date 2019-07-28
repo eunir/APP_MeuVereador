@@ -205,7 +205,7 @@ namespace webAPI.Models
         }
 
         //Listar usuário por id
-        public static CUsuario GetCUsuario(int id)
+        public static CUsuario GetUsuario(int id)
         {
             CUsuario usuarios = null;
             using (MySqlConnection conexao = new MySqlConnection(GetStringConexao()))
@@ -240,6 +240,81 @@ namespace webAPI.Models
 
         }
 
+        //Insert Usuários
+        public static int InsertUsuario(CUsuario usuario)
+        {
+            int registro = 0;
+            using (MySqlConnection conexao = new MySqlConnection(GetStringConexao()))
+            {
+                string sql = "INSERT INTO usuarios (nome_usuario,endereco,cpf_usuario,email_usuario,cidade_usuario,nivel_acesso,usuario,senha)" +
+                    " VALUES (@nome_usuario,@endereco,@cpf_usuario,@email_usuario,@cidade_usuario,@nivel_acesso,@usuario,@senha)";
+                using (MySqlCommand cmd = new MySqlCommand(sql, conexao))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@nome_usuario",usuario.nome_usuario);
+                    cmd.Parameters.AddWithValue("@endereco",usuario.endereco);
+                    cmd.Parameters.AddWithValue("@cpf_usuario",usuario.cpf_usuario);
+                    cmd.Parameters.AddWithValue("@email_usuario",usuario.email_usuario);
+                    cmd.Parameters.AddWithValue("@cidade_usuario",usuario.cidade_usuario);
+                    cmd.Parameters.AddWithValue("@nivel_acesso",usuario.nivel_acesso);
+                    cmd.Parameters.AddWithValue("@usuario", usuario.usuario);
+                    cmd.Parameters.AddWithValue("@senha", usuario.senha);
+
+                    conexao.Open();
+                    registro = cmd.ExecuteNonQuery();
+                    conexao.Close();
+                }
+            }
+            return registro;
+        }
+
+        //Update Usuários
+        public static int UpdateUsuario(CUsuario usuario)
+        {
+            int registro = 0;
+            using (MySqlConnection conexao = new MySqlConnection(GetStringConexao()))
+            {
+                string sql = "UPDATE usuarios SET nome_usuario=@nome_usuario, endereco=@endereco, cpf_usuario=@cpf_usuario," +
+                    "email_usuario=@email_usuario, cidade_usuario=@cidade_usuario, nivel_acesso=@nivel_acesso, usuario=@usuario, senha=@senha";
+                  
+                using (MySqlCommand cmd = new MySqlCommand(sql, conexao))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@nome_usuario", usuario.nome_usuario);
+                    cmd.Parameters.AddWithValue("@endereco", usuario.endereco);
+                    cmd.Parameters.AddWithValue("@cpf_usuario", usuario.cpf_usuario);
+                    cmd.Parameters.AddWithValue("@email_usuario", usuario.email_usuario);
+                    cmd.Parameters.AddWithValue("@cidade_usuario", usuario.cidade_usuario);
+                    cmd.Parameters.AddWithValue("@nivel_acesso", usuario.nivel_acesso);
+                    cmd.Parameters.AddWithValue("@usuario", usuario.usuario);
+                    cmd.Parameters.AddWithValue("@senha", usuario.senha);
+
+                    conexao.Open();
+                    registro = cmd.ExecuteNonQuery();
+                    conexao.Close();
+                }
+            }
+            return registro;
+        }
+
+        //Delete Usuários
+        public static int DeleteUsuario(int id)
+        {
+            int registro = 0;
+            using (MySqlConnection conexao = new MySqlConnection(GetStringConexao()))
+            {
+                string sql = "DELETE FROM usuarios WHERE id_usuarios = " + id;
+                using (MySqlCommand cmd = new MySqlCommand(sql, conexao))
+                {
+                    cmd.Parameters.AddWithValue("@id_usuarios", id);
+
+                    conexao.Open();
+                    registro = cmd.ExecuteNonQuery();
+                    conexao.Close();
+                }
+            }
+            return registro;
+        }
 
         //Fim dos métodos referentes ao cadastro de Usuarios
         //----------------------------------------------------
