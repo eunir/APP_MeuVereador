@@ -7,7 +7,7 @@ using webAPI.Models.funcionarios;
 using webAPI.Models.usuarios;
 using MySql.Data.MySqlClient;
 using System.Data;
-
+using webAPI.Models.chamados;
 
 namespace webAPI.Models
 {
@@ -317,6 +317,174 @@ namespace webAPI.Models
         }
 
         //Fim dos métodos referentes ao cadastro de Usuarios
+        //----------------------------------------------------
+
+        //----------------------------------------------------
+        //------Inicio dos métodos ref aos chamados-----------
+
+        //Listar todos chamados
+        public static List<CChamados> GetCChamados()
+        {
+            try
+            {
+                List<CChamados> _chamados = new List<CChamados>();
+                using (MySqlConnection conexao = new MySqlConnection(GetStringConexao()))
+                {
+                    conexao.Open();
+                    using (MySqlCommand cmd = new MySqlCommand("SELECT * FROM chamados", conexao))
+                    {
+                        using (MySqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            if (dr != null)
+                            {
+                                while (dr.Read())
+                                {
+                                    var chamados = new CChamados();
+                                    chamados.id_chamado = Convert.ToInt32(dr["id_chamado"]);
+                                    chamados.tipo_chamado = Convert.ToString(dr["tipo_chamado"]);
+                                    chamados.status_chamado = Convert.ToString(dr["status_chamado"]);
+                                    chamados.descricao = Convert.ToString(dr["descricao"]);
+                                    chamados.imagem_video = Convert.ToString(dr["imagem_video"]);
+                                    chamados.resposta_chamado = Convert.ToString(dr["resposta_chamado"]);
+                                    chamados.data_abertura= Convert.ToDateTime(dr["data_abertura"]);
+                                    chamados.longitude = Convert.ToString(dr["longitude"]);
+                                    chamados.latitude = Convert.ToString(dr["latitude"]);
+                                    chamados.id_usuario = Convert.ToInt32(dr["id_usuario"]);
+                                    chamados.id_funcionario = Convert.ToInt32(dr["id_funcionario"]);
+                                    _chamados.Add(chamados);
+                                }
+                            }
+                            return _chamados;
+                        }
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        //Listar chamados por id
+        public static CChamados GetChamados(int id)
+        {
+            CChamados chamados = null;
+            using (MySqlConnection conexao = new MySqlConnection(GetStringConexao()))
+            {
+                conexao.Open();
+                using (MySqlCommand cmd = new MySqlCommand("SELECT * FROM chamados WHERE id_chamado =" + id, conexao))
+                {
+                    using (MySqlDataReader dr = cmd.ExecuteReader())
+                    {
+                        if (dr != null)
+                        {
+                            while (dr.Read())
+                            {
+
+                                chamados.id_chamado = Convert.ToInt32(dr["id_chamado"]);
+                                chamados.tipo_chamado = Convert.ToString(dr["tipo_chamado"]);
+                                chamados.status_chamado = Convert.ToString(dr["status_chamado"]);
+                                chamados.descricao = Convert.ToString(dr["descricao"]);
+                                chamados.imagem_video = Convert.ToString(dr["imagem_video"]);
+                                chamados.resposta_chamado = Convert.ToString(dr["resposta_chamado"]);
+                                chamados.data_abertura = Convert.ToDateTime(dr["data_abertura"]);
+                                chamados.longitude = Convert.ToString(dr["longitude"]);
+                                chamados.latitude = Convert.ToString(dr["latitude"]);
+                                chamados.id_usuario = Convert.ToInt32(dr["id_usuario"]);
+                                chamados.id_funcionario = Convert.ToInt32(dr["id_funcionario"]);
+
+                            }
+                        }
+                        return chamados;
+                    }
+                }
+
+            }
+
+        }
+
+        //Insert chamados
+        public static int InsertChamados(CChamados chamados)
+        {
+            int registro = 0;
+            using (MySqlConnection conexao = new MySqlConnection(GetStringConexao()))
+            {
+                string sql = "INSERT INTO chamados (tipo_chamado,status_chamado,descricao,imagem_video,resposta_chamado,data_abertura,longitude,latitude,id_usuario,id_funcionario)" +
+                    " VALUES (@tipo_chamado,@status_chamado,@descricao,@imagem_video,@resposta_chamado,@data_abertura,@longitude,@latitude,@id_usuario,@id_funcionario)";
+                using (MySqlCommand cmd = new MySqlCommand(sql, conexao))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@tipo_chamado", chamados.tipo_chamado);
+                    cmd.Parameters.AddWithValue("@status_chamado", chamados.status_chamado);
+                    cmd.Parameters.AddWithValue("@descricao", chamados.descricao);
+                    cmd.Parameters.AddWithValue("@imagem_video", chamados.imagem_video);
+                    cmd.Parameters.AddWithValue("@resposta_chamado", chamados.resposta_chamado);
+                    cmd.Parameters.AddWithValue("@data_abertura", chamados.data_abertura);
+                    cmd.Parameters.AddWithValue("@longitude", chamados.longitude);
+                    cmd.Parameters.AddWithValue("@latitude", chamados.latitude);
+                    cmd.Parameters.AddWithValue("@id_usuario", chamados.id_usuario);
+                    cmd.Parameters.AddWithValue("@id_funcionario", chamados.id_funcionario);
+
+                    conexao.Open();
+                    registro = cmd.ExecuteNonQuery();
+                    conexao.Close();
+                }
+            }
+            return registro;
+        }
+
+        //Update chamados
+        public static int UpdateChamados(CChamados chamados)
+        {
+            int registro = 0;
+            using (MySqlConnection conexao = new MySqlConnection(GetStringConexao()))
+            {
+                string sql = "UPDATE chamados SET tipo_chamado=@tipo_chamado, status_chamado=@status_chamado, descricao=@descricao, imagem_video=@imagem_video" +
+                    "resposta_chamado=@resposta_chamado, data_abertura=@data_abertura, longitude=@longitude, latitude=@latitude, id_usuario=@id_usuario, id_funcionario=@id_funcionario ";
+                using (MySqlCommand cmd = new MySqlCommand(sql, conexao))
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Parameters.AddWithValue("@tipo_chamado", chamados.tipo_chamado);
+                    cmd.Parameters.AddWithValue("@status_chamado", chamados.status_chamado);
+                    cmd.Parameters.AddWithValue("@descricao", chamados.descricao);
+                    cmd.Parameters.AddWithValue("@imagem_video", chamados.imagem_video);
+                    cmd.Parameters.AddWithValue("@resposta_chamado", chamados.resposta_chamado);
+                    cmd.Parameters.AddWithValue("@data_abertura", chamados.data_abertura);
+                    cmd.Parameters.AddWithValue("@longitude", chamados.longitude);
+                    cmd.Parameters.AddWithValue("@latitude", chamados.latitude);
+                    cmd.Parameters.AddWithValue("@id_usuario", chamados.id_usuario);
+                    cmd.Parameters.AddWithValue("@id_funcionario", chamados.id_funcionario);
+
+                    conexao.Open();
+                    registro = cmd.ExecuteNonQuery();
+                    conexao.Close();
+                }
+            }
+            return registro;
+        }
+
+        //Delete chamados
+        public static int DeleteChamados(int id)
+        {
+            int registro = 0;
+            using (MySqlConnection conexao = new MySqlConnection(GetStringConexao()))
+            {
+                string sql = "DELETE FROM chamados WHERE id_chamado = " + id;
+                using (MySqlCommand cmd = new MySqlCommand(sql, conexao))
+                {
+                    cmd.Parameters.AddWithValue("@id_chamado", id);
+
+                    conexao.Open();
+                    registro = cmd.ExecuteNonQuery();
+                    conexao.Close();
+                }
+            }
+            return registro;
+        }
+        //------Fim dos métodos ref aos chamados--------------
         //----------------------------------------------------
 
     }

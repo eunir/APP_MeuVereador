@@ -135,11 +135,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ChamadosController.cs" />
     <Compile Include="Controllers\FuncionariosController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\chamados\CChamados.cs" />
+    <Compile Include="Models\chamados\CChamadosRepositorio.cs" />
+    <Compile Include="Models\chamados\IChamadosRepositorio.cs" />
     <Compile Include="Models\Dados\CAcessoDados.cs" />
     <Compile Include="Models\funcionarios\CFuncionarios.cs" />
     <Compile Include="Models\funcionarios\CFuncionariosRepositorio.cs" />
